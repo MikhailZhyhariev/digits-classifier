@@ -1,0 +1,29 @@
+.draw-field{
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+canvas {
+  display: block;
+  border: 1px solid black;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  width: 100%;
+  outline: none;
+  padding: 5px;
+  background-color: #f22;
+  border: none;
+  font-size: 14px;
+  color: white;
+}
+
+.button:hover {
+  background-color: #d50909;
+}
