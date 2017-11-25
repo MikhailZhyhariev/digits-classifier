@@ -23,7 +23,7 @@ with open('secret_key.txt', 'r') as f:
     SECRET_KEY = f.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -42,15 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'classifier.apps.ClassifierConfig',
-    'webpack_loader'
 ]
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': os.path.join(BASE_DIR, 'frontend', 'build', 'static/'),
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
-    }
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

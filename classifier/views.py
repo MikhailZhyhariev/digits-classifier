@@ -12,7 +12,8 @@ from .networks.keras import keras
 class FrontendAppView(View):
     @staticmethod
     def get(request):
-        return render(request, os.path.join(settings.TEMPLATE_PATH, 'index.html'))
+        # return render(request, os.path.join(settings.TEMPLATE_PATH, 'index.html'))
+        return render(request, 'index.html')
 
     @staticmethod
     def post(request):
@@ -56,5 +57,5 @@ class FrontendAppView(View):
 
             return HttpResponse(result, content_type='application/json')
         else:
-            with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
-                return HttpResponse(f.read())
+            return render(request, 'index.html')
+
