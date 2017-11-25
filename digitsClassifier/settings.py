@@ -56,7 +56,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'digitsClassifier.urls'
 
-TEMPLATE_PATH = os.path.join(BASE_DIR, 'frontend-digits-classifier', 'build')
+# TEMPLATE_PATH = os.path.join(BASE_DIR, 'frontend-digits-classifier', 'build')
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -124,12 +125,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
 
-STATICFILES_DIRS = [
-    os.path.join(TEMPLATE_PATH, 'static'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(TEMPLATE_PATH, 'static'),
+# ]
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 CSRF_COOKIE_NAME = "csrftoken"
 CSRF_COOKIE_SECURE = True

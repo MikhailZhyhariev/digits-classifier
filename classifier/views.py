@@ -11,7 +11,7 @@ from .networks.keras import keras
 class FrontendAppView(View):
     @staticmethod
     def get(request):
-        return render(request, 'index.html')
+        return render(request, 'classifier/index.html')
 
     @staticmethod
     def post(request):
@@ -55,5 +55,5 @@ class FrontendAppView(View):
 
             return HttpResponse(result, content_type='application/json')
         else:
-            return render(request, 'index.html')
+            return render(request, 'classifier/index.html')
 
