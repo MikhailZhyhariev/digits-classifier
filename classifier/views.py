@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
 from .networks.keras import keras
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 class FrontendAppView(View):
     @staticmethod
@@ -14,6 +14,7 @@ class FrontendAppView(View):
         return render(request, 'classifier/index.html')
 
     @staticmethod
+    @ensure_csrf_cookie
     def post(request):
         if request.POST:
             img = base64.b64decode(request.read())
@@ -53,7 +54,8 @@ class FrontendAppView(View):
 
             os.remove('image.png')
 
-            return HttpResponse(result, content_type='application/json')
+            # return HttpResponse(result, content_type='application/json')
+            return HttpResponse('I was here', content_type='text/html')
         else:
             return render(request, 'classifier/index.html')
 
