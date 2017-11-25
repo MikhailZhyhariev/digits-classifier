@@ -23,7 +23,7 @@ with open('secret_key.txt', 'r') as f:
     SECRET_KEY = f.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -42,7 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'classifier.apps.ClassifierConfig',
+    'webpack_loader'
 ]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': os.path.join(BASE_DIR, 'frontend', 'build', 'static/'),
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,10 +64,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'digitsClassifier.urls'
 
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'frontend-digits-classifier', 'build')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [TEMPLATE_PATH]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -127,7 +136,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend-digits-classifier')
-
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
 ]
