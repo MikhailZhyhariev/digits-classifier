@@ -131,3 +131,6 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 CSRF_COOKIE_NAME = "csrftoken"
 CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_DOMAIN = [
+    '.herokuapp.com',
+]
