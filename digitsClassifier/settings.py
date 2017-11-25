@@ -56,7 +56,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'digitsClassifier.urls'
 
-# TEMPLATE_PATH = os.path.join(BASE_DIR, 'frontend-digits-classifier', 'build')
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
