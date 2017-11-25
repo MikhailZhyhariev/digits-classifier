@@ -5,14 +5,12 @@ import json
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
-from django.conf import settings
 from .networks.keras import keras
 
 
 class FrontendAppView(View):
     @staticmethod
     def get(request):
-        # return render(request, os.path.join(settings.TEMPLATE_PATH, 'index.html'))
         return render(request, 'index.html')
 
     @staticmethod

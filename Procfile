@@ -1,1 +1,1 @@
-web: python3 manage.py runserver 0.0.0.0:5000
+web: gunicorn --env DJANGO_SETTINGS_MODULE=digitsClassifier.settings digitsClassifier.wsgi --log-file -
