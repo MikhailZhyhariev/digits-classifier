@@ -19,15 +19,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('s_file.txt', 'r') as f:
-    SECRET_KEY = f.read()
+SECRET_KEY = '3*l-&e3-(0=p+n=#m)bc!fgkm%av(5u=6*^)+dhpfpty-xyaez'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'http://127.0.0.1/',
-    '127.0.0.1'
+    '127.0.0.1',
+    '0.0.0.0'
 ]
 
 
@@ -123,8 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 
-REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend-digits-clasifier')
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend-digits-classifier')
 
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),

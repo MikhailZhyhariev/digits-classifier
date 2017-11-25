@@ -1,0 +1,13 @@
+.App {
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+aside {
+  width: 100%;
+}
