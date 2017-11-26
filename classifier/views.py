@@ -3,6 +3,7 @@ import base64
 import json
 
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic import View
 from django.http import HttpResponse
 from .networks.keras import keras
@@ -10,6 +11,7 @@ from .networks.keras import keras
 
 class FrontendAppView(View):
     @staticmethod
+    @ensure_csrf_cookie
     def get(request):
         return render(request, 'classifier/index.html')
 
