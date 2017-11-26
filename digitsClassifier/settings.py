@@ -56,11 +56,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'digitsClassifier.urls'
 
-TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_PATH]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -130,4 +129,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 CSRF_COOKIE_NAME = "csrftoken"
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
