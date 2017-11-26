@@ -57,3 +57,4 @@ class FrontendAppView(View):
             return HttpResponse(result, content_type='application/json')
         else:
             return render(request, 'classifier/index.html')
+
