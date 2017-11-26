@@ -23,7 +23,7 @@ with open('secret_key.txt', 'r') as f:
     SECRET_KEY = f.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -129,4 +129,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 CSRF_COOKIE_NAME = "csrftoken"
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False

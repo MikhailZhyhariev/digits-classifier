@@ -1,6 +1,51 @@
 import numpy as np
 from keras.models import model_from_json
-from keras.preprocessing import image
+from skimage.color import rgb2gray
+from skimage import img_as_float
+from skimage.transform import resize
+from skimage.io import imread
+
+
+def crop_image(img):
+    height, width = img.shape
+
+    crop_dict = {}
+
+    for row in range(height):
+        row_value = np.mean(img[row, :])
+        if row_value != 1 and crop_dict.get('top') is None:
+            crop_dict['top'] = row
+        elif row_value == 1 and crop_dict.get('top') is not None:
+            crop_dict['bottom'] = row - 1
+            break
+
+    for column in range(width):
+        column_value = np.mean(img[:, column])
+        if column_value != 1 and crop_dict.get('left') is None:
+            crop_dict['left'] = column
+        elif column_value == 1 and crop_dict.get('left') is not None:
+            crop_dict['right'] = column - 1
+            break
+
+    return img[crop_dict['top']:crop_dict['bottom'], crop_dict['left']:crop_dict['right']]
+
+
+def resize_image(img):
+    height, width = img.shape
+
+    if height > width:
+        scale = round(height / width)
+        img = resize(img, (20, round(20 / scale)))
+    else:
+        scale = round(width / height)
+        img = resize(img, (round(20 / scale), 20))
+
+    height, width = img.shape
+
+    result = np.ones((28, 28))
+    result[4:24, 14 - round(width / 2):14 - round(width / 2) + width] = img
+
+    return result
 
 
 class ModelFNN:
@@ -45,16 +90,18 @@ class ModelCNN:
 
 class KerasNetwork:
     def __init__(self, img):
-        self.img = image.load_img(img, target_size=(28, 28), grayscale=True)
+        self.img = imread(img)
 
     def transform(self, fnn=True):
-        img = image.img_to_array(self.img)
-        img = 255 - img
-        img /= 255
+        img = rgb2gray(self.img)
+        img = img_as_float(img)
+        img = crop_image(img)
+        img = resize_image(img)
+        img = 1 - img
         if fnn:
             img = img.reshape((1, 784))
         else:
-            img = np.expand_dims(img, axis=0)
+            img = img.reshape((1, 28, 28, 1))
         return img
 
     def predict(self):
