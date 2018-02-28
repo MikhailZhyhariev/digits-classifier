@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic import View
 from django.http import HttpResponse
-from .networks.keras import keras
+from .networks.keras.keras import KerasNetwork
 
 
 class FrontendAppView(View):
@@ -15,7 +15,6 @@ class FrontendAppView(View):
     def get(request):
         return render(request, 'classifier/index.html')
 
-
     @staticmethod
     def post(request):
         if request.POST:
@@ -23,40 +22,30 @@ class FrontendAppView(View):
             with open('image.png', 'wb') as f:
                 f.write(img)
 
-            network = keras.KerasNetwork('image.png')
+            network = KerasNetwork('image.png')
 
-            predict_fnn, predict_cnn = network.predict()
+            predict = network.predict()
 
-            ret_fnn = [
-                {
-                    'digit': digit,
-                    'probability': f'{round(probability * 100, 3)}%'
-                } for probability, digit in predict_fnn
-            ]
-            ret_cnn = [
-                {
-                    'digit': digit,
-                    'probability': f'{round(probability * 100, 3)}%'
-                } for probability, digit in predict_cnn
-            ]
-            digit = predict_cnn[0][1] if predict_cnn[0][0] + 15 > predict_fnn[0][0] else predict_fnn[0][1]
+            predict_result = map(lambda lst: [{
+                'digit': digit,
+                'probability': f'{round(probability * 100, 3)}%'
+            } for probability, digit in lst], predict)
 
-            result = json.dumps({
-                "number": digit,
-                "info": [
-                {
-                    "type": "Keras FNN",
-                    "answer": ret_fnn
-                },
-                {
-                    "type": "Keras CNN",
-                    "answer": ret_cnn
-                }
-            ]})
+            if predict[0][0][0] > (predict[1][0][0] + 0.2):
+                result_digit = predict[0][0][1]
+            else:
+                result_digit = predict[1][0][1]
+
+            json_result = json.dumps({
+                "number": result_digit,
+                "info": [{
+                    "type": name,
+                    "answer": result
+                } for result, name in zip(predict_result, ['Keras FNN', 'Keras CNN'])]
+            })
 
             os.remove('image.png')
 
-            return HttpResponse(result, content_type='application/json')
+            return HttpResponse(json_result, content_type='application/json')
         else:
             return render(request, 'classifier/index.html')
-
